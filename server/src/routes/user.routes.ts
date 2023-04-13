@@ -11,13 +11,13 @@ const router = express.Router();
 const loginSchema = z.object({
     body: z.object({
         email: z.string({ required_error: 'Email is required', }).email(),
-        password: z.number({ required_error: 'Password is required' }).min(6).max(32)
+        password: z.string({ required_error: 'Password is required' }).min(6).max(32)
     })
 });
 
 // @route   POST /api/user/login
 router.post('/login', validate(loginSchema), async (req, res) => {
-    const { email, password } = req.body as Pick<IUser, 'email' | 'password'>;
+    const { email, password } = req.body as z.infer<typeof loginSchema>['body'];
     try {
         const user = await User.findOne({ email });
         if (!user) return res.status(404).json({ message: 'Invalid email or password' });
@@ -38,15 +38,13 @@ const registerSchema = z.object({
         email: z.string({ required_error: 'Email is required' }).email(),
         firstName: z.string({ required_error: 'First name is required' }).min(2).max(14),
         lastName: z.string({ required_error: 'Last name is required' }).min(2).max(14),
-        password: z.string({ required_error: 'Password is rqeuired' }).min(6).max(32)
+        password: z.string({ required_error: 'Password is rqeuired' }).min(6).max(32),
     }),
 });
 
-type RegisterSchema = z.infer<typeof registerSchema>;
-
 // @route   POST /api/user/register
 router.post('/register', validate(registerSchema), async (req: Request, res: Response) => {
-    const { email, firstName, lastName, password } = req.body as RegisterSchema['body'];
+    const { email, firstName, lastName, password } = req.body as z.infer<typeof registerSchema>['body'];
     try {
         const userExists = await User.findOne({ email });
         if (userExists) return res.status(409).json({ message: 'User already exists' });
