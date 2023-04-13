@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sofia+Sans+Semi+Condensed:wght@300;400;500;600;700&display=swap');
+
+html, body, #root {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.chat-item {
+  display: none;
+}
+
+.chat-item.active {
+  display: block;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #202020;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #121212;
+}
+
+.ck-editor__editable_inline {
+  min-height: 200px;
+}
+
+/* Change background toolbar */
+.ck-toolbar{
+  background: #121212 !important;
+  color: #ccc;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Change button colors on toolbar */
+.ck.ck-button{
+  padding: .5rem !important;
+  background-color: #121212 !important;
+  color: #ccc !important;
+  cursor: pointer !important;
+  margin-right: .25rem !important;
+}
+
+/* (Hover) Change button colors on toolbar */
+.ck.ck-button:hover{
+  background-color: #000000 !important;
+  color: #ccc !important;
+}
+
+/* Change background  */
+.ck.ck-editor__main>.ck-editor__editable{
+  background-color: #121212 !important;
+  color: #ccc;
+  border: none !important;
+  box-shadow: none !important;
+  /* font-size: 14px; */
+}
+.ck blockquote {
+  border-left: 2px solid #DA5745 !important;
+  padding-left: 1rem;
+}
+
+.ck h1, .ck h2, .ck h3, .ck h4, .ck h5, .ck p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: #ccc;
+  margin: 0;
+  padding: 0;
+}
+
+.ck h1 {
+  font-size: 40px;
+}
+.ck h2 {
+  font-size: 34px;
+}
+.ck h3 {
+  font-size: 30px;
+}
+.ck h4 {
+  font-size: 24px;
+}
+.ck h5 {
+  font-size: 18px;
+}
+.ck h6 {
+  font-size: 16px;
+}
+.ck p {
+  font-size: 14px;
+  font-weight: 100;
+}
+
+/* I should change the color of pre elements  */
+/* .ck pre {
+  background-color: #202020 !important;
+  color: #ccc !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-size: 14px;
+} */
