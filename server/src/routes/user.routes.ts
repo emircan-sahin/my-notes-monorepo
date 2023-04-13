@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import z from 'zod';
 import validate from '../middleware/validate.middlware';
+import { IUser } from '../models/user.model';
 
 const router = express.Router();
 
@@ -14,14 +15,9 @@ const loginSchema = z.object({
     })
 });
 
-interface LoginBody {
-    email: string;
-    password: string;
-}
-
 // @route   POST /api/user/login
 router.post('/login', validate(loginSchema), async (req, res) => {
-    const { email, password }: LoginBody = req.body;
+    const { email, password } = req.body as Pick<IUser, 'email' | 'password'>;
     try {
         const user = await User.findOne({ email });
         if (!user) return res.status(404).json({ message: 'Invalid email or password' });
@@ -46,16 +42,11 @@ const registerSchema = z.object({
     }),
 });
 
-interface RegisterBody {
-    email: string;
-    firstName: string;
-    lastName: string;
-    password: string;
-}
+type RegisterSchema = z.infer<typeof registerSchema>;
 
 // @route   POST /api/user/register
 router.post('/register', validate(registerSchema), async (req: Request, res: Response) => {
-    const { email, firstName, lastName, password }: RegisterBody = req.body;
+    const { email, firstName, lastName, password } = req.body as RegisterSchema['body'];
     try {
         const userExists = await User.findOne({ email });
         if (userExists) return res.status(409).json({ message: 'User already exists' });
