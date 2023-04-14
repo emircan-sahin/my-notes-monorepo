@@ -8,16 +8,16 @@ import { idSchema } from './index.routes';
 const router = express.Router();
 
 const getNoteSchema = z.object({
-    params: z.object(idSchema)
+    params: z.object({ ...idSchema })
 });
 
 // @route   GET /api/note/get/:id
 router.get('/get/:id', authMiddleware, async (req: Request, res: Response) => {
     const { id } = req.params as z.infer<typeof getNoteSchema>['params'];
     try {
-        const note = await Note.findOne({ _id: id, user: req.user.id });
-        res.json({ note, message: 'Note fetched successfully', status: 'success' });
-        console.table(note);
+        const note = await Note.findOne({ _id: id, userId: req.user.id });
+        if (!note) return res.status(404).json({ message: 'Note not found' });
+        res.json({ note, status: 'success' });
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
     }
@@ -29,10 +29,11 @@ router.get('/getAll', authMiddleware, async (req: Request, res: Response) => {
     try {
         const notes = await Note.aggregate([
             { $match: { userId: req.user.id } },
-            { $project: { title: 1, content: { $substrCP: ['$content', 0, 255] } } }
+            { $project: { title: 1, content: { $substrCP: ['$content', 0, 255] }, updatedAt: 1 } },
+            { $sort: { updatedAt: -1 } }
         ]);
         console.table(notes);
-        res.json({ notes, message: 'Notes fetched successfully', status: 'success' });
+        res.json({ notes, status: 'success' });
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
     }
@@ -61,13 +62,15 @@ const updateNoteSchema = z.object({
         title: z.string().min(2).max(128),
         content: z.string()
     }),
-    params: z.object(idSchema)
+    params: z.object({ ...idSchema })
 });
 
 // Update a note in database by id and user id
 router.put('/update/:id', authMiddleware, validate(updateNoteSchema), async (req: Request, res: Response) => {
     const { id } = req.params as z.infer<typeof updateNoteSchema>['params'];
     const { title, content } = req.body as z.infer<typeof updateNoteSchema>['body'];
+
+    console.log(req.body);
     try {
         const note = await Note.findOneAndUpdate({ _id: id, userId: req.user?.id }, { title, content }, { new: false });
         if (!note) return res.status(404).json({ message: 'Note not found' });
@@ -77,19 +80,19 @@ router.put('/update/:id', authMiddleware, validate(updateNoteSchema), async (req
     }
 });
 
-const deleteNoteSchema = z.object({
+const removeNoteSchema = z.object({
     params: z.object({
         id: z.string().min(12).max(24)
     })
 });
 
-// Delete a note in database by id and user id
-router.delete('/delete/:id', authMiddleware, validate(deleteNoteSchema), async (req: Request, res: Response) => {
-    const { id } = req.params as z.infer<typeof deleteNoteSchema>['params'];
+// Remove a note in database by id and user id
+router.delete('/remove/:id', authMiddleware, validate(removeNoteSchema), async (req: Request, res: Response) => {
+    const { id } = req.params as z.infer<typeof removeNoteSchema>['params'];
     try {
         const note = await Note.findOneAndDelete({ _id: id, userId: req.user.id });
         if (!note) return res.status(404).json({ message: 'Note not found' });
-        res.json({ message: 'Note deleted successfully', status: 'success' });
+        res.json({ message: 'Note removed successfully', status: 'success' });
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
     }
