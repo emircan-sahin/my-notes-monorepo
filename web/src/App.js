@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   return (
-    <div className='flex flex-row flex-wrap w-full h-full bg-primary'>
+    <div className='flex flex-row w-full h-full bg-primary'>
       <ToastContainer theme='dark' />
       <Outlet />
     </div>

@@ -39,7 +39,7 @@ const MyEditor = () => {
     }, [activeNote]);
 
     return (
-        <div className="w-full md:w-[85%] p-4 md:p-24">
+        <div className="flex-1 w-[75%] lg:w-[80%] xl:w-[85%] min-h-screen h-auto p-4 md:p-24">
             <>
                 <input
                     className="font-light w-full text-danger p-4 mb-10 text-lg border-b border-danger bg-stone-600/10 outline-0"
