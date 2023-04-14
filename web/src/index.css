@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sofia+Sans+Semi+Condensed:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;600;700&display=swap");
 
-html, body, #root {
-  height: 100%;
-  font-family: 'Inter', sans-serif;
+html,
+body,
+#root {
+  /* height: 100%; */
+  /* import font family of roboto */
+  font-family: "Roboto", sans-serif;
 }
 
 .chat-item {
@@ -32,11 +35,11 @@ html, body, #root {
 }
 
 .ck-editor__editable_inline {
-  min-height: 200px;
+  min-height: 600px;
 }
 
 /* Change background toolbar */
-.ck-toolbar{
+.ck-toolbar {
   background: #121212 !important;
   color: #ccc;
   border: none !important;
@@ -44,36 +47,41 @@ html, body, #root {
 }
 
 /* Change button colors on toolbar */
-.ck.ck-button{
-  padding: .5rem !important;
+.ck.ck-button {
+  padding: 0.5rem !important;
   background-color: #121212 !important;
   color: #ccc !important;
   cursor: pointer !important;
-  margin-right: .25rem !important;
+  margin-right: 0.25rem !important;
 }
 
 /* (Hover) Change button colors on toolbar */
-.ck.ck-button:hover{
+.ck.ck-button:hover {
   background-color: #000000 !important;
   color: #ccc !important;
 }
 
 /* Change background  */
-.ck.ck-editor__main>.ck-editor__editable{
-  background-color: #121212 !important;
+.ck.ck-editor__main > .ck-editor__editable {
+  background-color: rgb(87 83 78 / 0.1) !important;
   color: #ccc;
   border: none !important;
   box-shadow: none !important;
   /* font-size: 14px; */
 }
 .ck blockquote {
-  border-left: 2px solid #DA5745 !important;
+  border-left: 2px solid #da5745 !important;
   padding-left: 1rem;
 }
 
-.ck h1, .ck h2, .ck h3, .ck h4, .ck h5, .ck p {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
+.ck h1,
+.ck h2,
+.ck h3,
+.ck h4,
+.ck h5,
+.ck p {
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 300 !important;
   color: #ccc;
   margin: 0;
   padding: 0;
@@ -103,10 +111,15 @@ html, body, #root {
 }
 
 /* I should change the color of pre elements  */
-/* .ck pre {
-  background-color: #202020 !important;
-  color: #ccc !important;
+.ck pre {
+  background-color: #121212 !important;
+  color: #aaa!important;
   border: none !important;
   box-shadow: none !important;
+}
+
+.ck pre code {
+  /* font-family: "Roboto", sans-serif !important; */
+  font-weight: 300;
   font-size: 14px;
-} */
+}

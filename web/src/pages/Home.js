@@ -1,10 +1,13 @@
 import React from 'react';
+import Notes from '../components/Notes';
+import MyEditor from '../components/Editor';
 
 const Home = () => {
     return (
-        <div>
-            {/* <h1>Home</h1> */}
-        </div>
+        <>
+            <Notes />
+            <MyEditor />
+        </>
     );
 }
 
