@@ -41,6 +41,14 @@ const Login = () => {
                     <Input onChange={(e) => handleChange(e, 'password')} type={'password'} label={'Password'} className={'w-full'} />
                 </div>
 
+                {/* Don't have an account? */}
+                <div className='flex flex-row flex-wrap mt-8'>
+                    <p className='text-gray-300 text-sm mr-1'>Don't have an account?</p>
+                    <span className='text-sm underline cursor-pointer' onClick={() => navigate('/register')}>
+                        Register
+                    </span>
+                </div>
+
                 {/* Submit button */}
                 <div className='flex flex-row flex-wrap mt-8'>
                     <div className='flex flex-col w-40 mx-auto'>

@@ -3,10 +3,14 @@ import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import useNoteStore from "../stores/note.store";
 import { NoteService } from "../services/Note.service";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const MyEditor = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+
+    const navigate = useNavigate();
 
     const { activeNote, setActiveNote, setNotes } = useNoteStore();
 
@@ -38,9 +42,21 @@ const MyEditor = () => {
         }
     }, [activeNote]);
 
+    const handleSignOut = () => {
+        Cookies.remove("token");
+        navigate("/login");
+    };
+
     return (
-        <div className="flex-1 w-[75%] lg:w-[80%] xl:w-[85%] min-h-screen h-auto p-4 md:p-24">
+        <div className="flex-1 w-[75%] lg:w-[80%] xl:w-[85%] min-h-screen h-auto p-4 md:px-24">
             <>
+                {/* Sign out button */}
+                <div className="flex flex-row justify-end py-3 mb-4">
+                    <button onClick={handleSignOut} className="bg-[#121212] hover:bg-danger hover:-translate-y-2 text-white font-bold py-2 px-4 rounded transition-all">
+                        Sign out
+                    </button>
+                </div>
+
                 <input
                     className="font-light w-full text-danger p-4 mb-10 text-lg border-b border-danger bg-stone-600/10 outline-0"
                     placeholder="Enter the title"

@@ -28,7 +28,7 @@ const Register = () => {
         const data = await UserService.register(form);
         if (data?.token) {
             toast.success('You have successfully registered!');
-            Cookies.set('token', data.token);
+            Cookies.set('token',     data.token);
             navigate('/');
         }
     };
@@ -50,6 +50,14 @@ const Register = () => {
                 <div className='flex flex-row flex-wrap mt-8'>
                     <Input onChange={(e) => handleChange(e, 'password')} type={'password'} label={'Password'} className={'w-1/2 pr-4'} />
                     <Input onChange={(e) => handleChange(e, 'passwordAgain')} type={'password'} label={'Password again'} className={'w-1/2 pl-4'} />
+                </div>
+
+                {/* Do you have an account? */}
+                <div className='flex flex-row flex-wrap mt-8'>
+                    <p className='text-gray-300 text-sm mr-1'>Do you have an account?</p>
+                    <span className='text-sm underline cursor-pointer' onClick={() => navigate('/login')}>
+                       Login
+                    </span>
                 </div>
 
                 {/* Submit button */}
