@@ -7,11 +7,16 @@ const instance = axios.create({
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('token')}`
     }
 });
 
-instance.interceptors.request.use(config => config, error => Promise.reject(error));
+// Add a request interceptor
+instance.interceptors.request.use(config => {
+    config.headers.Authorization = `Bearer ${Cookies.get('token')}`;
+    return config;
+}, error => Promise.reject(error));
+
+// Add a response interceptor
 instance.interceptors.response.use(response => {
     if (response.data?.message) {
         toast.success(response.data.message);
